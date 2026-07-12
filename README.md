@@ -27,7 +27,6 @@ Example:
 
 ```
 [15:21] Yvette Gahamanyi: Hello. How are you doing?
-[15:22] Denyse Mutoni: I am doing well, thank you.
 ```
 
 ---
@@ -36,12 +35,12 @@ Example:
 
 ### Architecture
 
-| File | Role |
-|------|------|
-| `manifest.json` | Extension config, permissions, content script registration |
-| `content.js` | Runs inside Google Meet; watches the DOM and captures data |
-| `popup.html` / `popup.js` | Toolbar popup UI — status, name field, export, and clear |
-| `icons/` | Extension icons (16×16, 48×48, 128×128) |
+| File                      | Role                                                       |
+| ------------------------- | ---------------------------------------------------------- |
+| `manifest.json`           | Extension config, permissions, content script registration |
+| `content.js`              | Runs inside Google Meet; watches the DOM and captures data |
+| `popup.html` / `popup.js` | Toolbar popup UI — status, name field, export, and clear   |
+| `icons/`                  | Extension icons (16×16, 48×48, 128×128)                    |
 
 ### Transcript capture
 
@@ -54,13 +53,6 @@ Example:
 
 - Watches for chat message blocks (`div.Ss4fHf`) in the Meet page
 - Extracts sender name, timestamp, and message text (`[jsname="dTKtvb"]`)
-- Deduplicates messages so the same chat line is not saved twice
-
-### Your name
-
-Google Meet labels **your own** captions and chat as `"You"`. The extension popup includes a **Your name** field so exports use your real name (e.g. `Yvette Gahamanyi`) instead of `"You"`. This name is saved in `chrome.storage.local` and applied to all future captures.
-
-Auto-detection from the People panel is also attempted, but entering your name manually is the most reliable option.
 
 ### Privacy
 
@@ -90,23 +82,10 @@ No audio, video, or meeting data is transmitted anywhere.
 
 ### Option B — Load from source (developers)
 
-1. Clone or copy this `extension/` folder locally
+1. Clone or copy this `collabTrack_extension/` folder locally
 2. Open Chrome → `chrome://extensions`
 3. Enable **Developer mode**
-4. Click **Load unpacked** and select this `extension/` folder
-
-### Updating after code or icon changes
-
-1. Go to `chrome://extensions`
-2. Click the **refresh** icon on the CollabTrack Meeting Exporter card
-3. Hard-refresh any open Google Meet tabs (`Cmd+Shift+R` / `Ctrl+Shift+R`)
-
-If you distribute via CollabTrack, rebuild the zip first:
-
-```bash
-cd extension
-zip -r ../collabtrack-frontend/public/collabtrack-extension.zip manifest.json content.js popup.html popup.js icons/
-```
+4. Click **Load unpacked** and select this `collabTrack_extension/` folder
 
 ---
 
@@ -162,19 +141,6 @@ extension/
 │   └── icon128.png
 └── README.md
 ```
-
----
-
-## Troubleshooting
-
-| Problem | Fix |
-|---------|-----|
-| "Could not establish connection" | Refresh the Meet tab, then reopen the popup |
-| Transcript is empty | Enable captions (`Ctrl+Shift+C` / `Cmd+Shift+C`) |
-| Chat file is empty | Open the Chat panel during the meeting |
-| Your lines show as "You" | Enter your name in the popup **Your name** field |
-| Wrong speaker attribution | Set your name manually; avoid relying on auto-detection |
-| Changes not applied after editing code | Refresh the extension at `chrome://extensions` |
 
 ---
 
